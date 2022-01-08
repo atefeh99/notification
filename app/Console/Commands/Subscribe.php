@@ -69,7 +69,6 @@ class Subscribe extends Command
                 NotificationService::createItem($msg);
             }, 1);
             $mqtt->loop(true);
-            $mqtt->disconnect();
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }

@@ -20,9 +20,9 @@ trait RulesTrait
         return [
             NotificationController::class => [
                 'createItem' => [
-                    "date" => "required|string",
+                    "date" => "string",
                     "type" => "nullable|string",
-                    "job_id" => "integer|required",
+                    "job_id" => "integer",
                     "metadata" => "array|required",
                     "topic" => "required|string"
                 ],

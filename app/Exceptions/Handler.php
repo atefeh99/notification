@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -32,7 +33,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
      * @return void
      *
      * @throws \Exception
@@ -45,8 +46,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Throwable $exception
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Throwable
@@ -84,6 +85,15 @@ class Handler extends ExceptionHandler
                         'code' => $e->getErrorCode()
                     ],
                     'status' => Response::HTTP_UNAUTHORIZED
+                ];
+            } elseif ($e instanceof AccessDeniedHttpException) {
+                $return_object = [
+                    'data' => [
+                        'status' => Response::HTTP_FORBIDDEN,
+                        'message' => $e->getMessage(),
+                        'code' => $e->getErrorCode()
+                    ],
+                    'status' => Response::HTTP_FORBIDDEN
                 ];
             } elseif ($e instanceof MethodNotAllowedHttpException) {
                 $return_object = [
