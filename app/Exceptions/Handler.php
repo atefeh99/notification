@@ -91,7 +91,7 @@ class Handler extends ExceptionHandler
                     'data' => [
                         'status' => Response::HTTP_FORBIDDEN,
                         'message' => $e->getMessage(),
-                        'code' => $e->getErrorCode()
+//                        'code' => $e->getErrorCode()
                     ],
                     'status' => Response::HTTP_FORBIDDEN
                 ];

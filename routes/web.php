@@ -18,7 +18,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('','NotificationController@createItem');
-$router->post('/publish','NotificationController@publish');
+$router->post('publish','NotificationController@publish');
 $router->get('', 'NotificationController@index');
 $router->get('/{id}', 'NotificationController@show');
 $router->patch('/{id}', 'NotificationController@updateItem');
