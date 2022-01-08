@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a78b5766ce1218e52f13ed146bd2bc0d",
+    "content-hash": "9ca99ddf1bad8d6aa4f3ed24c169bc9f",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -3019,6 +3019,41 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "shiri/mqtt_publisher",
+            "version": "0.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/atefeh99/MqttNotification.git",
+                "reference": "e9a2072cf73afd52b136e3fdbd729c09b9991b25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/atefeh99/MqttNotification/zipball/e9a2072cf73afd52b136e3fdbd729c09b9991b25",
+                "reference": "e9a2072cf73afd52b136e3fdbd729c09b9991b25",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0",
+                "php-mqtt/client": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MqttNotification\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "this package publish notifications through mqtt.",
+            "support": {
+                "issues": "https://github.com/atefeh99/MqttNotification/issues",
+                "source": "https://github.com/atefeh99/MqttNotification/tree/0.0.12"
+            },
+            "time": "2022-01-08T10:09:04+00:00"
         },
         {
             "name": "symfony/console",

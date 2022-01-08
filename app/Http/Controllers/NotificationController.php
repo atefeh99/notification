@@ -5,10 +5,26 @@ namespace App\Http\Controllers;
 use App\Exceptions\UnauthorizedUserException;
 use Illuminate\Http\Request;
 use App\Http\Services\NotificationService;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class NotificationController extends ApiController
 {
     use RulesTrait;
+    public function publish(Request $request)
+    {
+        $user_id = $request->header('x-user-id');
+        if (!isset($user_id)) {
+            throw new UnauthorizedUserException(trans('messages.custom.unauthorized_user'), 1999);
+        }
+        $scopes = $request->header('x-scopes');
+        if($scopes != 'admin'){
+            throw new AccessDeniedHttpException();
+        }
+        $notification  = NotificationService::publish($request->all()['metadata'],$user_id);
+        return $this->respondSuccessCreate($notification);
+
+
+    }
 
     public function createItem(Request $request)
     {
