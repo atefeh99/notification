@@ -9,7 +9,7 @@ use MqttNotification\Publisher;
 
 class NotificationService
 {
-    public static function publish($metadata,$user_id)
+    public static function publish($metadata, $user_id)
     {
         $host = env('MQTT_HOST');
         $port = env('MQTT_PORT');
@@ -34,9 +34,9 @@ class NotificationService
 
     public static function index($take, $skip)
     {
-        $data = Notification::index($take, $skip);
-        $count = count($data);
-        if ($count > 0) return $data;
+        $query = Notification::index($take, $skip);
+        $data = $query['data'];
+        if (count($data) > 0) return $query;
         return [];
 
 
