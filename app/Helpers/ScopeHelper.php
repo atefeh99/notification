@@ -11,14 +11,13 @@ class ScopeHelper
 
     public static function isAdmin($scopes)
     {
-        if (
-        ScopeHelper::inScope($scopes, self::ADMIN_KEY)
-        ) {
+        if (ScopeHelper::inScope($scopes, self::ADMIN_KEY)) {
             return true;
         }
 
         return false;
     }
+
     public static function inScope($scopes, $needle)
     {
         if (is_string($scopes)) {

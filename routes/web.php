@@ -13,13 +13,10 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
 
 $router->post('','NotificationController@createItem');
 $router->post('publish','NotificationController@publish');
 $router->get('', 'NotificationController@index');
-$router->get('/{id}', 'NotificationController@show');
-$router->patch('/{id}', 'NotificationController@updateItem');
-$router->delete('/{id}', 'NotificationController@removeItem');
+$router->get('{id}', 'NotificationController@show');
+$router->patch('{id}', 'NotificationController@updateItem');
+$router->delete('{id}', 'NotificationController@removeItem');
