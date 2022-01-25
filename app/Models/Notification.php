@@ -22,28 +22,37 @@ class Notification extends Model
     protected $casts = [
         'metadata' => 'array'
     ];
+
     public static function createItem($data)
     {
         return self::create($data);
     }
+
     public static function show($id)
     {
         return self::findOrFail($id);
     }
-    public static function index($take,$skip)
+
+    public static function index($take, $skip)
     {
-        return self::take($take)->skip($skip)->get()->toArray();
+        $count = count(self::all());
+        return [
+            'data' => self::orderBy('created_at', 'desc')->take($take)->skip($skip)->get()->toArray(),
+            'count' => $count
+        ];
 
     }
-    public static function updateItem($data,$id)
+
+    public static function updateItem($data, $id)
     {
-        $item =  self::where('id', $id)->firstOrFail();
+        $item = self::where('id', $id)->firstOrFail();
         foreach ($data as $key => $value) {
             $item->update([$key => $value]);
         }
         return $item;
 
     }
+
     public static function removeItem($id)
     {
         $item = self::where('id', $id)->firstOrFail();
@@ -52,6 +61,7 @@ class Notification extends Model
 
 
     }
+
     public function getCreatedAtAttribute($value)
     {
         return Date::convertCarbonToJalali($value);

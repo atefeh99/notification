@@ -79,17 +79,16 @@ class ApiController extends Controller
      */
     public function respondArrayResult($data)
     {
-        $total_count = $data['count'] ?? count($data);
-        unset($data['count']);
-        array_walk_recursive($data, function(&$value)
-        {
+        $total_count = array_key_exists('count', $data) ? $data['count'] : 0;
+        $input = array_key_exists('data', $data) ? $data['data'] : $data;
+        array_walk_recursive($input, function (&$value) {
             $value = is_string($value) ? rtrim($value) : $value;
         });
         return $this
             ->setStatusCode(Response::HTTP_OK)
             ->respond([
                 'odata.count' => $total_count,
-                'value' => $data
+                'value' => $input
             ]);
 
     }
@@ -107,6 +106,7 @@ class ApiController extends Controller
             ->setCode($code)
             ->respondWithError();
     }
+
     public function respondSuccessUpdate($id, $message = '')
     {
         if (!$message) {
