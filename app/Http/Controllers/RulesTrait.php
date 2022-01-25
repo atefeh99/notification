@@ -27,7 +27,7 @@ trait RulesTrait
                     "topic" => "required|string"
                 ],
                 'show' => [
-                    'id' => 'integer'
+                    'id' => 'numeric'
                 ],
                 'index' => [
                     '$top' => 'numeric',
@@ -66,7 +66,6 @@ trait RulesTrait
         }
 
         if ($validation->fails()) {
-//            dd($validation->errors()->getMessages());
             throw new RequestRulesException($validation->errors()->getMessages(), $code);
         }
 
