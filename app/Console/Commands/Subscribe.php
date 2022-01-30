@@ -54,11 +54,10 @@ class Subscribe extends Command
 
             $clientId = rand(5, 15);
             $connection_settings = new ConnectionSettings();
-            $connection_settings
+            $connection_settings = $connection_settings
                 ->setUsername($username)
                 ->setPassword($password)
                 ->setKeepAliveInterval(120);
-
             $mqtt = new MqttClient($host, $port, $clientId);
             $mqtt->connect($connection_settings, $clean_session);
 
