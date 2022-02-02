@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Notification;
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use MqttNotification\Publisher;
 
 
@@ -15,7 +15,8 @@ class NotificationService
         $port = env('MQTT_PORT');
         $username = env('MQTT_USERNAME');
         $password = env('MQTT_PASSWORD');
-        $mqtt = new Publisher($metadata, null, null, $user_id, 'notification', null/*msg_type*/, $host, $username, $password, $port);
+        $success_time = Carbon::now();
+        $mqtt = new Publisher($metadata, null, $success_time, $user_id, 'notification', null, $host, $username, $password, $port);
         return $mqtt->send();
 
 
@@ -23,6 +24,8 @@ class NotificationService
 
     public static function createItem($data)
     {
+        $topic = explode('/', $data['topic']);
+        $data['user_id'] = $topic[0];
         return Notification::createItem($data);
 
     }
@@ -32,9 +35,9 @@ class NotificationService
         return Notification::show($id);
     }
 
-    public static function index($take, $skip)
+    public static function index($take, $skip,$user_id)
     {
-        $query = Notification::index($take, $skip);
+        $query = Notification::index($take, $skip,$user_id);
         $data = $query['data'];
         if (count($data) > 0) return $query;
         return [];

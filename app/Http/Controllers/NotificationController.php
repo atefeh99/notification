@@ -73,7 +73,7 @@ class NotificationController extends ApiController
         $take = $data['$top'] ?? env('TAKE');
         $skip = $data['$skip'] ?? env('SKIP');
 
-        $notifications = NotificationService::index($take, $skip);
+        $notifications = NotificationService::index($take, $skip,$user_id);
         return $this->respondArrayResult($notifications);
     }
 

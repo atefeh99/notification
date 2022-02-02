@@ -44,7 +44,6 @@ class Subscribe extends Command
     public function handle()
     {
         printf("listening");
-
         try {
             $host = env('MQTT_HOST');
             $port = env('MQTT_PORT');
