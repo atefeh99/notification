@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Notification;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use MqttNotification\Publisher;
 
 
@@ -26,7 +27,11 @@ class NotificationService
     {
         $topic = explode('/', $data['topic']);
         $data['user_id'] = $topic[0];
-        return Notification::createItem($data);
+        try {
+            return Notification::createItem($data);
+        } catch (\Exception $e) {
+           Log::error($e->getMessage());
+        }
 
     }
 
@@ -35,9 +40,9 @@ class NotificationService
         return Notification::show($id);
     }
 
-    public static function index($take, $skip,$user_id)
+    public static function index($take, $skip, $user_id)
     {
-        $query = Notification::index($take, $skip,$user_id);
+        $query = Notification::index($take, $skip, $user_id);
         $data = $query['data'];
         if (count($data) > 0) return $query;
         return [];
