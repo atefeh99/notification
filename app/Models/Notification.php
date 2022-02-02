@@ -17,7 +17,8 @@ class Notification extends Model
         "job_id",
         "metadata",
         "type",
-        "topic"
+        "topic",
+        "user_id"
     ];
     protected $casts = [
         'metadata' => 'array'
@@ -33,11 +34,11 @@ class Notification extends Model
         return self::findOrFail($id);
     }
 
-    public static function index($take, $skip)
+    public static function index($take, $skip,$user_id)
     {
         $count = count(self::all());
         return [
-            'data' => self::orderBy('created_at', 'desc')->take($take)->skip($skip)->get()->toArray(),
+            'data' => self::where('user_id',$user_id)->orderBy('created_at', 'desc')->take($take)->skip($skip)->get()->toArray(),
             'count' => $count
         ];
 

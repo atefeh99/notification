@@ -117,6 +117,43 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Publish",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-user-id",
+						"value": "754",
+						"type": "text"
+					},
+					{
+						"key": "x-scopes",
+						"value": "admin",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"metadata\":{\n        \"msg\":\"hi this is an error message\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Host}}/publish",
+					"host": [
+						"{{Host}}"
+					],
+					"path": [
+						"publish"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
