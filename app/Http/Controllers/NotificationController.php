@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class NotificationController extends ApiController
 {
     use RulesTrait;
+
     public function publish(Request $request)
     {
         $user_id = $request->header('x-user-id');
@@ -18,10 +19,10 @@ class NotificationController extends ApiController
             throw new UnauthorizedUserException(trans('messages.custom.unauthorized_user'), 1999);
         }
         $scopes = $request->header('x-scopes');
-        if(!ScopeHelper::isAdmin($scopes)){
+        if (!ScopeHelper::isAdmin($scopes)) {
             throw new AccessDeniedHttpException();
         }
-        $notification  = NotificationService::publish($request->all()['metadata'],$user_id);
+        $notification = NotificationService::publish($request->all()['metadata'], $user_id);
         return $this->respondSuccessCreate($notification);
 
 
@@ -34,10 +35,11 @@ class NotificationController extends ApiController
             throw new UnauthorizedUserException(trans('messages.custom.unauthorized_user'), 2000);
         }
         $scopes = $request->header('x-scopes');
-        if(!ScopeHelper::isAdmin($scopes)){
+        if (!ScopeHelper::isAdmin($scopes)) {
             throw new AccessDeniedHttpException();
         }
         $data = self::checkRules($request, __FUNCTION__, 1000);
+        $data['user_id'] = $user_id;
         $notification = NotificationService::createItem($data);
         return $this->respondSuccessCreate($notification);
     }
@@ -54,7 +56,7 @@ class NotificationController extends ApiController
             __FUNCTION__,
             1001
         );
-        $notification = NotificationService::show($id);
+        $notification = NotificationService::show($id,$user_id);
         return $this->respondItemResult($notification);
 
     }
@@ -73,7 +75,7 @@ class NotificationController extends ApiController
         $take = $data['$top'] ?? env('TAKE');
         $skip = $data['$skip'] ?? env('SKIP');
 
-        $notifications = NotificationService::index($take, $skip,$user_id);
+        $notifications = NotificationService::index($take, $skip, $user_id);
         return $this->respondArrayResult($notifications);
     }
 
@@ -88,7 +90,7 @@ class NotificationController extends ApiController
             __FUNCTION__,
             1003
         );
-        $notification = NotificationService::updateItem($data, $id);
+        $notification = NotificationService::updateItem($data, $id,$user_id);
         return $this->respondItemResult($notification);
     }
 

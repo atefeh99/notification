@@ -29,34 +29,43 @@ class Notification extends Model
         return self::create($data);
     }
 
-    public static function show($id)
+    public static function show($id, $user_id)
     {
-        return self::findOrFail($id);
+        return self::where('user_id', $user_id)
+            ->where('id', $id)
+            ->firstOrFail($id);
     }
 
-    public static function index($take, $skip,$user_id)
+    public static function index($take, $skip, $user_id)
     {
-        $count = count(self::all());
+        $count = count(self::where('user_id', $user_id)->get());
         return [
-            'data' => self::where('user_id',$user_id)->orderBy('created_at', 'desc')->take($take)->skip($skip)->get()->toArray(),
+            'data' => self::where('user_id', $user_id)
+                ->orderBy('created_at', 'desc')
+                ->take($take)->skip($skip)
+                ->get()
+                ->toArray(),
             'count' => $count
         ];
 
     }
 
-    public static function updateItem($data, $id)
+    public static function updateItem($data, $id, $user_id)
     {
-        $item = self::where('id', $id)->firstOrFail();
+        $item = self::where('user_id', $user_id)
+            ->where('id', $id)
+            ->firstOrFail();
         foreach ($data as $key => $value) {
             $item->update([$key => $value]);
         }
         return $item;
 
     }
-
-    public static function removeItem($id)
+    public static function removeItem($id, $user_id)
     {
-        $item = self::where('id', $id)->firstOrFail();
+        $item = self::where('id', $id)
+            ->where('user_id', $user_id)
+            ->firstOrFail();
         $item->delete();
         return $item;
 
