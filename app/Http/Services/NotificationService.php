@@ -35,9 +35,9 @@ class NotificationService
 
     }
 
-    public static function show($id)
+    public static function show($id,$user_id)
     {
-        return Notification::show($id);
+        return Notification::show($id,$user_id);
     }
 
     public static function index($take, $skip, $user_id)
@@ -50,9 +50,9 @@ class NotificationService
 
     }
 
-    public static function updateItem($data, $id)
+    public static function updateItem($data, $id,$user_id)
     {
-        return Notification::updateItem($data, $id);
+        return Notification::updateItem($data, $id,$user_id);
     }
 
     public static function removeItem($id)
