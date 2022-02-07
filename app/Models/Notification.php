@@ -33,7 +33,7 @@ class Notification extends Model
     {
         return self::where('user_id', $user_id)
             ->where('id', $id)
-            ->firstOrFail($id);
+            ->firstOrFail();
     }
 
     public static function index($take, $skip, $user_id)
